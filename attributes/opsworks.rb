@@ -37,7 +37,7 @@ default[:cassandra][:tarball] = {
 # Set the OpsWorks specifics here
 
 seed_array = []
-node[:opsworks][:layers][:cassandra][:instances].each{|instance| seed_array << instance.private_ip}
+node[:opsworks][:layers][:cassandra][:instances].each{|instance| seed_array << instance[:private_ip]}
 
 if seed_array.empty?
   seed_array << node[:ipaddress]
