@@ -33,3 +33,14 @@ default[:cassandra][:tarball] = {
   :url => "http://www.eu.apache.org/dist/cassandra/#{default[:cassandra][:version]}/apache-cassandra-#{default[:cassandra][:version]}-bin.tar.gz",
   :md5 => "91460be9a35d8795b6b7e54208650054"
 }
+
+# Set the OpsWorks specifics here
+
+seed_array = []
+node[:opsworks][:layers][:cassandra][:instances].each{|instance| seed_array << instance.private_ip}
+
+if seed_array.empty?
+  seed_array << node[:ipaddress]
+end
+  
+set[:cassandra][:seeds] = seed_array
