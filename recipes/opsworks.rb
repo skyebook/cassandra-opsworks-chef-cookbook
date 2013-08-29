@@ -3,13 +3,11 @@ include_recipe "cassandra::datastax"
 seed_array = []
 node[:opsworks][:layers][:cassandra][:instances].each{|instance| seed_array << instance.private_ip}
 
-
-
 if seed_array.empty?
   seed_array << node[:ipaddress]
 end
   
-default[:cassandra][:seeds] => seed_array
+default[:cassandra][:seeds] = seed_array
 
 %w(cassandra.yaml cassandra-env.sh).each do |f|
   template File.join(node["cassandra"]["conf_dir"], f) do
