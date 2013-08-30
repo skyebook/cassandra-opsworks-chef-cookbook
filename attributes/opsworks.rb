@@ -37,7 +37,7 @@ default[:cassandra][:tarball] = {
 # Set the OpsWorks specifics here
 
 seed_array = []
-stack["opsworks"]["layers"]["cassandra"]["instances"].each do |instance_name, values|
+node["opsworks"]["layers"]["cassandra"]["instances"].each do |instance_name, values|
   seed_array << values["private_ip"]
 end
 
