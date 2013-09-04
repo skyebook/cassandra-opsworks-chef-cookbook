@@ -38,6 +38,12 @@ The latter uses DataStax Debian repository and provisions Cassandra `1.2`.
  * `node[:cassandra][:data_root_dir]` (default: `/var/lib/cassandra`): data directory root
  * `node[:cassandra][:log_dir]` (default: `/var/log/cassandra`): log directory
  * `node[:cassandra][:rpc_address]` (default: `localhost`): address to bind the RPC interface
+ 
+## Helpful Details
+
+* Authentication is enabled by default, you may log in with ```cqlsh ip_address -u cassandra -p cassandra``` - it goes without saying that you should change the username and password before putting anything in production :)
+* At the same time you're changing the default password you'll want to change the replication factor for the system_auth keyspace.  From the ```cqlsh``` prompt, run ```ALTER KEYSPACE system_auth WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor': 3};```
+* The seed list is currently generated from the list of private IP addresses within the OpsWorks cassandra layer.  To use any sort of multi-region function you'll need to use public IP addresses in the seed list (and use the multi-region snitch: ```EC2MultiRegionSnitch```)
 
 
 ## Dependencies
