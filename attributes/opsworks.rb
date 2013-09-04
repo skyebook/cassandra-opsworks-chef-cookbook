@@ -27,7 +27,9 @@ default[:cassandra] = {
   :seeds            => [],
   :concurrent_reads => 32,
   :concurrent_writes => 32,
-  :snitch           => 'SimpleSnitch'
+  :snitch           => 'SimpleSnitch',
+  :authenticator    => 'org.apache.cassandra.auth.PasswordAuthenticator',
+  :authorizer       => 'org.apache.cassandra.auth.CassandraAuthorizer'
 }
 default[:cassandra][:tarball] = {
   :url => "http://www.eu.apache.org/dist/cassandra/#{default[:cassandra][:version]}/apache-cassandra-#{default[:cassandra][:version]}-bin.tar.gz",
