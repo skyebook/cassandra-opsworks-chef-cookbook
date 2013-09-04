@@ -27,7 +27,7 @@ default[:cassandra] = {
   :seeds            => [],
   :concurrent_reads => 32,
   :concurrent_writes => 32,
-  :snitch           => 'SimpleSnitch',
+  :snitch           => 'EC2Snitch',
   :authenticator    => 'org.apache.cassandra.auth.PasswordAuthenticator',
   :authorizer       => 'org.apache.cassandra.auth.CassandraAuthorizer'
 }
