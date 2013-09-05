@@ -36,6 +36,7 @@ package "python-cql" do
 end
 
 package "dsc12" do
+  version node[:cassandra][:version]
   action :install
 end
 
