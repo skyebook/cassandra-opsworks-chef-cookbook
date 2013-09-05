@@ -39,6 +39,13 @@ package "dsc12" do
   action :install
 end
 
+# If we have requested opscenter installation, install that also
+if node[:cassandra][:install_opscenter]
+  package "opscenter-free" do
+    action :install
+  end
+end
+
 service "cassandra" do
   supports :restart => true, :status => true
   action [:enable, :start]
