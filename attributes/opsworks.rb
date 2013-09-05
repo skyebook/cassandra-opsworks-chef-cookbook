@@ -40,7 +40,12 @@ default[:cassandra][:tarball] = {
 
 seed_array = []
 node["opsworks"]["layers"]["cassandra"]["instances"].each do |instance_name, values|
-  seed_array << values["private_ip"]
+  # If using the multi-region snitch, we must use the public IP address
+  if node[:cassandra][:snitch] == "Ec2MultiRegionSnitch"
+    seed_array << values["ip"]
+  else
+    seed_array << values["private_ip"]
+  end
 end
 
 if seed_array.empty?

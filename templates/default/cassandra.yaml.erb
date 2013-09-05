@@ -328,6 +328,9 @@ listen_address: <%= node[:cassandra][:listen_address] %>
 # Address to broadcast to other Cassandra nodes
 # Leaving this blank will set it to the same value as listen_address
 # broadcast_address: 1.2.3.4
+<% if node[:cassandra][:snitch] == "Ec2MultiRegionSnitch" %>
+broadcast_address: <% node[:opsworks][:instance][:ip]%>
+<% end %>
 
 
 # Whether to start the native transport server.
