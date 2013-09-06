@@ -34,20 +34,16 @@ default[:cassandra] = {
 
 # Set the OpsWorks specifics here
 
+puts "Configured Snitch is #{node["cassandra"]["snitch"]}"
+
 seed_array = []
 node["opsworks"]["layers"]["cassandra"]["instances"].each do |instance_name, values|
   # If using the multi-region snitch, we must use the public IP address
   if node["cassandra"]["snitch"] == "Ec2MultiRegionSnitch"
-    log "Cassandra OpsWorks Seed Configuration" do
-      level :info
-      message "Using multi-region snitch"
-    end
+    puts "Using multi-region snitch"
     seed_array << values["ip"]
   else
-    log "Cassandra OpsWorks Seed Configuration" do
-      level :info
-      message "Using single-region snitch"
-    end
+    puts "Using single-region snitch"
     seed_array << values["private_ip"]
   end
 end
