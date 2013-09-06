@@ -1,3 +1,7 @@
+# Install Java 7 First
+set [:java][:openjdkversion] = ['openjdk-7-jre']
+include_recipe "java::openjdk"
+
 include_recipe "cassandra::datastax"
 
 %w(cassandra.yaml cassandra-env.sh).each do |f|
