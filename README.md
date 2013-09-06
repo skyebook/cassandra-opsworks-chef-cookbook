@@ -24,8 +24,9 @@ Ubuntu 11.04, 11.10, 12.04, 12.10.
 
 ## Recipes
 
-I have removed the upstream recipe `cassandra::tarball` and have kept only the installation via `cassandra::datastax`
-You will want to run `cassandra::opsworks` to have your configuration files copied over, however.
+ * I have removed the upstream recipe `cassandra::tarball` and have kept only the installation via `cassandra::datastax`
+ * You will want to run `cassandra::opsworks` to have your configuration files copied over, however.
+ * `cassandra::ephemeral_xfs` Reconfigures your instance store volume (only one for now, /dev/xvdb) as XFS.  **This deletes any data on the volume.**
 
 
 ## Attributes

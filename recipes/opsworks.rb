@@ -1,3 +1,6 @@
+# Configure the filesystem
+include_recipe "cassandra::ephemeral_xfs"
+
 # Install Java 7 First
 package "openjdk-7-jre" do
   action :install
