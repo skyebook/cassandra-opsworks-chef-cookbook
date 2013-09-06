@@ -46,6 +46,16 @@ if node[:cassandra][:install_opscenter]
   end
 end
 
+# Install Java 7 First
+package "openjdk-7-jre" do
+  action :install
+end
+
+# Force Java 7 as the default
+execute "update-java-alternatives" do
+  command "update-java-alternatives --set openjdk-7-jre"
+end
+
 service "cassandra" do
   supports :restart => true, :status => true
   action [:enable, :start]
