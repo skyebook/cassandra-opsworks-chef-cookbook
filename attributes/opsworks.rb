@@ -37,19 +37,23 @@ default[:cassandra] = {
 puts "Configured Snitch is #{node["cassandra"]["snitch"]}"
 
 seed_array = []
+
+# Add this node as the first seed
+# If using the multi-region snitch, we must use the public IP address
+if node["cassandra"]["snitch"] == "Ec2MultiRegionSnitch"
+  seed_array << node["opsworks"]["instance"]["ip"]
+else
+  seed_array << node["opsworks"]["instance"]["private_ip"]
+end
+
+
 node["opsworks"]["layers"]["cassandra"]["instances"].each do |instance_name, values|
   # If using the multi-region snitch, we must use the public IP address
   if node["cassandra"]["snitch"] == "Ec2MultiRegionSnitch"
-    puts "Using multi-region snitch"
     seed_array << values["ip"]
   else
-    puts "Using single-region snitch"
     seed_array << values["private_ip"]
   end
-end
-
-if seed_array.empty?
-  seed_array << node[:ipaddress]
 end
   
 set[:cassandra][:seeds] = seed_array
