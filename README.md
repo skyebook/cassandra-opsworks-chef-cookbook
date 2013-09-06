@@ -1,4 +1,4 @@
-# Apache Cassandra Chef Cookbook
+# Apache Cassandra Chef Cookbook (for OpsWorks)
 
 This is an OpsCode Chef cookbook for Apache Cassandra ([DataStax Community Edition](http://www.datastax.com/products/community)).
 
@@ -7,13 +7,15 @@ way to tweak Cassandra configuration parameters using Chef node attributes. The 
 that is it was created for CI and development environments. Attributes will be used in the future,
 doing so for single-server installations won't be difficult.
 
+This has been forked from Michael Klishin's [awesome cookbook](https://github.com/michaelklishin/cassandra-chef-cookbook) to include more specific OpsWorks support.
+
 
 ## Apache Cassandra Version
 
 This cookbook currently provides
 
- * Cassandra 1.2.x via tarballs
- * Cassandra 1.2.x (DataStax Community Edition) via packages.
+ * Cassandra 2.0.0 (DataStax Community Edition) via packages.
+ * Automatic Seed assignment from the [Deployment JSON](http://docs.aws.amazon.com/opsworks/latest/userguide/workingcookbook-json.html) passed in by OpsWorks.
 
 ## Supported OS Distributions
 
@@ -22,22 +24,20 @@ Ubuntu 11.04, 11.10, 12.04, 12.10.
 
 ## Recipes
 
-Two provided recipes are `cassandra::tarball` and `cassandra::datastax`. The former uses official tarballs
-and thus can be used to provision any specific version.
-
-The latter uses DataStax Debian repository and provisions Cassandra `1.2`.
+I have removed the upstream recipe `cassandra::tarball` and have kept only the installation via `cassandra::datastax`
+You will want to run `cassandra::opsworks` to have your configuration files copied over, however.
 
 
 ## Attributes
 
  * `node[:cassandra][:version]` (default: a recent patch version): version to provision
- * `node[:cassandra][:tarball][:url]` and `node[:cassandra][:tarball][:md5]` specify tarball URL and MD5 chechsum used by the `cassandra::tarball` recipe.
  * `node[:cassandra][:user]`: username Cassandra node process will use
  * `node[:cassandra][:jvm][:xms]` (default: `32`) and `node[:cassandra][:jvm][:xmx]` (default: `512`) control JVM `-Xms` and `-Xms` flag values, in megabytes (no need to add the `m` suffix)
  * `node[:cassandra][:installation_dir]` (default: `/usr/local/cassandra`): installation directory
  * `node[:cassandra][:data_root_dir]` (default: `/var/lib/cassandra`): data directory root
  * `node[:cassandra][:log_dir]` (default: `/var/log/cassandra`): log directory
  * `node[:cassandra][:rpc_address]` (default: `localhost`): address to bind the RPC interface
+ * `node[:cassandra][:rpc_address]` (default: `EC2Snitch`): Snitch to use.  The default is only meant to be used between availability zones in a *single region*.  See notes in next section if the multi-region snitch is desired.
  
 ## Helpful Details
 
@@ -52,6 +52,14 @@ OracleJDK 7, OpenJDK 7, OpenJDK 6 or Sun JDK 6.
 
 
 ## Copyright & License
+
+### Opsworks Fork
+
+Skye Book, 2013.
+
+Released under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
+
+### Upstream
 
 Michael S. Klishin, Travis CI Development Team, 2012.
 
