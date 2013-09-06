@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: cassandra
+# Cookbook Name:: cassandra-opsworks
 # Recipe:: ephemeral_xfs
 #
 # Copyright 2013, Skye Book
@@ -26,8 +26,6 @@
 package "xfsprogs" do
   action :install
 end
-
-
 
 target        = "/dev/xvdb"
 mountLocation = "/mnt"
