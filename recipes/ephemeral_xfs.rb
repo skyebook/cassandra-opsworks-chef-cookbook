@@ -33,17 +33,14 @@ mountLocation = "/mnt"
 # Unmount the ephemeral storage provided by Amazon
 execute "umount" do
   command "umount #{target}"
-  action :nothing
 end
 
 # Make the new filesystem (-f option is used to overwrite the existing)
 execute "mkfs.xfs" do
   command "mkfs.xfs -f #{target}"
-  action :nothing
 end
 
 # Mount the new filesystem
 execute "mount" do
   command "mount #{target} #{mountLocation}"
-  action :nothing
 end
