@@ -1,12 +1,12 @@
 # Configure the filesystem
-include_recipe "cassandra::ephemeral_xfs"
+include_recipe "cassandra-opsworks::ephemeral_xfs"
 
 # Install Java 7 First
 package "openjdk-7-jre" do
   action :install
 end
 
-include_recipe "cassandra::datastax"
+include_recipe "cassandra-opsworks::datastax"
 
 # Force Java 7 as the default
 execute "update-java-alternatives" do
