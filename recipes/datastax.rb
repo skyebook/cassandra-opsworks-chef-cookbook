@@ -35,7 +35,7 @@ package "python-cql" do
   action :install
 end
 
-package "dsc12" do
+package "dsc20" do
   action :install
 end
 
