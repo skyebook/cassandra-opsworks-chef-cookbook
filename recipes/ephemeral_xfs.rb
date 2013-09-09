@@ -44,3 +44,8 @@ end
 execute "mount" do
   command "mount #{target} #{mountLocation}"
 end
+
+# Make the mount accessible
+execute "chmod" do
+  command "chmod 777 #{mountLocation}"
+end
