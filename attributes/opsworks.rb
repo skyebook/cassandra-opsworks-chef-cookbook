@@ -29,7 +29,12 @@ default[:cassandra] = {
   :concurrent_writes => 32,
   :snitch           => 'EC2Snitch',
   :authenticator    => 'org.apache.cassandra.auth.PasswordAuthenticator',
-  :authorizer       => 'org.apache.cassandra.auth.CassandraAuthorizer'
+  :authorizer       => 'org.apache.cassandra.auth.CassandraAuthorizer',
+  :native_transport => {
+    :start       => true,
+    :port        => 9042,
+    :max_threads => 128
+  }
 }
 
 # Set the OpsWorks specifics here
