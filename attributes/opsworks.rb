@@ -5,7 +5,8 @@ default[:cassandra] = {
   :user => "cassandra",
   :jvm  => {
     :xms => 32,
-    :xmx => 512
+    :xmx => 512,
+    :xss => "228k"
   },
   :limits => {
     :memlock => 'unlimited',
