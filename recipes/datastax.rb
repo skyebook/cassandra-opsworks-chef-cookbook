@@ -29,6 +29,16 @@ apt_repository "datastax" do
   action :add
 end
 
+# Install Java 7 First
+package "openjdk-7-jre" do
+  action :install
+end
+
+# Force Java 7 as the default
+execute "update-java-alternatives" do
+  command "update-java-alternatives --set java-1.7.0-openjdk-amd64"
+end
+
 # DataStax Server Community Edition package will not install w/o this
 # one installed. MK.
 package "python-cql" do
@@ -49,16 +59,6 @@ if node[:cassandra][:install_opscenter]
   package "opscenter-free" do
     action :install
   end
-end
-
-# Install Java 7 First
-package "openjdk-7-jre" do
-  action :install
-end
-
-# Force Java 7 as the default
-execute "update-java-alternatives" do
-  command "update-java-alternatives --set java-1.7.0-openjdk-amd64"
 end
 
 service "cassandra" do
